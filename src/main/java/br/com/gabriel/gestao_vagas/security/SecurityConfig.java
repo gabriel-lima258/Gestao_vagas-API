@@ -17,16 +17,17 @@ public class SecurityConfig {
     // método para gerenciar as requisições
     
     @Autowired
-    private SecurityFilter securityFilter;
+    private SecurityCompanyFilter securityCompanyFilter;
 
     @Autowired
     private SecurityCandidateFilter securityCandidateFilter;
 
     // definindo rotas do docs swagger
-    private static final String[] SWAGGER_LIST = {
+    private static final String[] PERMIT_ALL_LIST = {
         "/swagger-ui/**",
         "/v3/api-docs/**",
-        "/swagger-resources/**"
+        "/swagger-resources/**",
+        "/actuator/**"
     };
 
     // @Bean serve para definir algum método já gerenciado pelo spring e sobrescreve-lo
@@ -39,10 +40,10 @@ public class SecurityConfig {
                     .requestMatchers("/company/").permitAll()
                     .requestMatchers("/company/auth").permitAll()
                     .requestMatchers("/candidate/auth").permitAll()
-                    .requestMatchers(SWAGGER_LIST).permitAll();
+                    .requestMatchers(PERMIT_ALL_LIST).permitAll();
                 auth.anyRequest().authenticated();  
             })
-            .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+            .addFilterBefore(securityCompanyFilter, BasicAuthenticationFilter.class)
             .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class);
             // adicionando o filtro criado
 

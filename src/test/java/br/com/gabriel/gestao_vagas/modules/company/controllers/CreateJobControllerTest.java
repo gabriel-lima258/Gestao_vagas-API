@@ -97,9 +97,6 @@ public class CreateJobControllerTest {
             .content(TestUtils.objectToJSON(createJobDTO))
             .header("Authorization", 
                 TestUtils.generateToken(UUID.randomUUID(), "JAVAGAS_@123#")))
-            .andExpect(MockMvcResultMatchers.status().isBadRequest());
-
-            
-    }
-    
+            .andExpect(MockMvcResultMatchers.status().isBadRequest());      
+    }  
 }

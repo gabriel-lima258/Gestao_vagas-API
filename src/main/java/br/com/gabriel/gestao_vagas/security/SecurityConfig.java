@@ -22,6 +22,13 @@ public class SecurityConfig {
     @Autowired
     private SecurityCandidateFilter securityCandidateFilter;
 
+    // definindo rotas do docs swagger
+    private static final String[] SWAGGER_LIST = {
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/swagger-resources/**"
+    };
+
     // @Bean serve para definir algum método já gerenciado pelo spring e sobrescreve-lo
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -31,7 +38,8 @@ public class SecurityConfig {
                 auth.requestMatchers("/candidate/").permitAll()
                     .requestMatchers("/company/").permitAll()
                     .requestMatchers("/company/auth").permitAll()
-                    .requestMatchers("/candidate/auth").permitAll();
+                    .requestMatchers("/candidate/auth").permitAll()
+                    .requestMatchers(SWAGGER_LIST).permitAll();
                 auth.anyRequest().authenticated();  
             })
             .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
